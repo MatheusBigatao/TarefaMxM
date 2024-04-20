@@ -1,19 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Mysql.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+string mySqlConnection =
+              builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+                options.UseMySql(mySqlConnection,
+                      ServerVersion.AutoDetect(mySqlConnection)));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-// // Add MySQL database connection
-// string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// builder.Services.AddDbContext<CadastroContext>(options =>
-//     options.UseMySql(connectionString, 
-//         new MySqlServerVersion(new Version(10, 5, 4)))
-//         );
 
 var app = builder.Build();
 
@@ -31,4 +32,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
