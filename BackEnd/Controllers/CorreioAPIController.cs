@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Mysql.Context;
 using Mysql.Models;
 
+using BackEnd.Contracts;
+using BackEnd.ExternalAPIs;
+using BackEnd.MiddleExternalAPIs;
+
 namespace Mysql.Controllers
 {
     [ApiController]
@@ -17,25 +21,15 @@ namespace Mysql.Controllers
             DBContext = context;
         }
         [HttpGet(Name = "LogradouroPeloCEP")]
-        public async Task<Endereco> Get(string Cep)
+        public async Task<IActionResult> Get(string Cep)
         {
-            HttpClient client = new HttpClient();
-
-            var response = await client.GetAsync($"https://viacep.com.br/ws/{Cep}/json/");
-            var conteudo = await response.Content.ReadAsStringAsync();
-
-            var endereco = JsonSerializer.Deserialize<Endereco>(conteudo);
-
-            return endereco;
-
-            // return new Endereco()
-            // -            {
-            // -                Cep = "12345678",
-            // -                Cidade = "Cidade",
-            // -                Logradouro = "Logradouro",
-            // -                Bairro = "Bairro",
-            // -                Complemento = "Complemento",
-            // -            };
+            MiddleCepAPI CepAPI = new MiddleCepAPI();
+            Endereco? responseEndereco = await CepAPI.GetCepInfo(Cep);
+            if (responseEndereco == null)
+            {
+                return BadRequest();
+            }
+            return Ok(responseEndereco);
         }
     }
 }

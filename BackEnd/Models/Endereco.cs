@@ -15,6 +15,15 @@ namespace BackEnd.Models
         public string Bairro { get; set; }
         public string Logradouro { get; set; }
         public string Complemento { get; set; }
+    public Endereco(string cep, string uf, string cidade, string bairro, string logradouro, string complemento)
+        {
+            Cep = cep;
+            Uf = uf;
+            Cidade = cidade;
+            Bairro = bairro;
+            Logradouro = logradouro;
+            Complemento = complemento;
+        }
     }
 
 }
