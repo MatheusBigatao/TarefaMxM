@@ -21,7 +21,6 @@ namespace BackEnd.ExternalAPIs
                 return null;
             }
             var conteudo = await response.Content.ReadAsStringAsync();
-            // var responseOBJ = JsonSerializer.Deserialize<ViaCepAPIResponse>(conteudo);
             JObject json = JObject.Parse(conteudo);
             string cep = json["cep"]?.ToString() ?? "";
             string uf = json["uf"]?.ToString() ?? "";
