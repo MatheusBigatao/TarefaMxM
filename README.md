@@ -5,7 +5,6 @@
   - [x] Testar INSERT em qualquer tabela
 - [x] Fazer chamada API dos Correios e chamá-la pelo Controller
   - [x] Criar Proxy para API
-- [ ] Criptografar senha do usuário
 - [ ] Chamada API para mostrar todos os usuários
 - [ ] Chamada API para mostrar o endereço de um usuário
  
@@ -17,7 +16,7 @@
   - [ ] Chamar API dos correios quando consultar CEP
   - [ ] Atualizar inputs com as informações da API
 - [ ] Colocar validadores dos inputs
-  - [ ] Máscara para CPF ou CNPJ (auto preencher com pontos e traços)
+  - [X] Máscara para CPF ou CNPJ (auto preencher com pontos e traços)
   - [ ] Email
   - [ ] Telefone
 - [ ] Página para acessar todos os dados dos usuários
