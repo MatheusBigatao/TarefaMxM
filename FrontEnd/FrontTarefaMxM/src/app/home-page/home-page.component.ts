@@ -22,7 +22,7 @@ export class HomePageComponent {
             sobrenome: new FormControl('', Validators.required),
             cpf_cnpj_valor: new FormControl('', [Validators.required]),
             cpf_cnpj: new FormControl('cpf', Validators.required),
-            email: new FormControl('', Validators.required),
+            email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]),
             telefone: new FormControl('', Validators.required),
             cep: new FormControl('', Validators.required),
             estado: new FormControl('UF', Validators.required),
@@ -32,6 +32,12 @@ export class HomePageComponent {
             bairro: new FormControl('', Validators.required),
             complemento: new FormControl('', Validators.required),
         });
+
+        var element_cpf_cnpj = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
+        element_cpf_cnpj?.addEventListener('keypress', () => {
+            this.atribuir_mascara_cpf_cnpj();
+        })
+
     }
 
     submitForm() {
@@ -50,23 +56,93 @@ export class HomePageComponent {
     }
 
     limpar_cpf_cnpj(){
-        let element = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
+        var element_selected = document.getElementById('cpf_cnpj') as HTMLInputElement;
+        var tipo_selecionado = element_selected.value;
+        var maxLength = 14;
+        var placeholder = '123.456.789-10';
+        if (tipo_selecionado == 'cpf'){
+            let maxLength = 14
+        }else{
+            var maxLength = 18
+            var placeholder = '00.623.904/0001-73';
+    }
+        var element = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
         if (element) {
             let value = element.value = '';
+
+            element.maxLength =maxLength;
+            element.placeholder = placeholder;
         }
     }
 
-    atribuir_mascara_cpf_cnpj() {
-        let element_selected = document.getElementById('cpf_cnpj') as HTMLInputElement;
+    
 
-        let element_valor = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
-        if (element_valor) {
-            let value = element_valor.value;
-            let pattern = /^(\d{3})?(\d{3})?(\d{3})?(\d{2})?$/;
-            let replacement = element_selected.value == 'cpf' ? '$1.$2.$3-$4' : '$1.$2.$3/$4-$5';
-            element_valor.value = value.replace(pattern, replacement);
-            let masked_value = element_valor.value.replace(/\D/g, '');
-            element_valor.value = masked_value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, replacement);
+    atribuir_mascara_cpf_cnpj() {
+        var element_selected = document.getElementById('cpf_cnpj') as HTMLInputElement;
+
+        var element_valor = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
+        if (!element_valor) {
+            return;
         }
+        var inputLength = element_valor.value.length;
+
+        if (element_selected.value == 'cpf'){ // Máscara para CPF 123.456.789-10
+            if(inputLength === 3 || inputLength === 7){
+                element_valor.value += '.';
+            }else if(inputLength === 11){
+                element_valor.value += '-';
+            }
+        }else if(element_selected.value == 'cnpj'){ // Máscara para CNPJ  00.623.904/0001-73
+            if(inputLength === 2 || inputLength === 6){
+                element_valor.value += '.';
+            }else if (inputLength === 10){
+                element_valor.value += '/';
+            }else if(inputLength === 15){
+                element_valor.value += '-';
+            }
+        }
+    }
+
+    atribuir_mascara_telefone() {
+        var element_valor = document.getElementById('telefone') as HTMLInputElement;
+        var inputLength = element_valor.value.length;
+        ehNumeroCelular = true;
+        if (inputLength >4) {
+            var digitoCelular = element_valor.value.charAt(5);
+            switch (digitoCelular) {
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    var ehNumeroCelular = true;
+                break;
+                default:
+                    var ehNumeroCelular = false;
+                break;
+            }
+        }
+
+        if (ehNumeroCelular){
+            element_valor.maxLength = 15;
+        }else{
+            element_valor.maxLength = 14;
+        }
+
+        if(inputLength === 1){
+            element_valor.value = '('+element_valor.value;
+        }else if(inputLength === 3){
+            element_valor.value += ') ';
+        }
+
+        if (ehNumeroCelular){
+            if(inputLength === 10){
+                element_valor.value += '-';
+            }
+        }else {
+            if(inputLength === 9){
+                element_valor.value += '-';
+            }
+        }
+        
     }
 }

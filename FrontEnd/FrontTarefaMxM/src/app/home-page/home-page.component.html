@@ -25,10 +25,10 @@
 					</div>
                     <div class="form-group">
 						<div class="form-row form-row-3">
-							<input type="text" formControlName="cpf_cnpj_valor" (change)='atribuir_mascara_cpf_cnpj()' name="cpf_cnpj_valor" class="cpf_cnpj_valor" id="cpf_cnpj_valor" placeholder="123.456.789-00" required>
+							<input type="text" formControlName="cpf_cnpj_valor" autocomplete="off" maxlength="14" (keyup)='atribuir_mascara_cpf_cnpj()' name="cpf_cnpj_valor" class="cpf_cnpj_valor" id="cpf_cnpj_valor" placeholder="123.456.789-00" required>
 						</div>
 						<div class="form-row form-row-4">
-						<select name="cpf_cnpj" formControlName="cpf_cnpj" id="cpf-cnpj" (change)="limpar_cpf_cnpj()" required>
+						<select name="cpf_cnpj" formControlName="cpf_cnpj" id="cpf_cnpj" (change)="limpar_cpf_cnpj()" required>
 						    <option class="option" value="cpf">CPF</option>
 						    <option class="option" value="cnpj">CNPJ</option>
 						</select>
@@ -43,7 +43,7 @@
 						<input type="text" formControlName="email" name="email" class="email" id="email" placeholder="Email" required>
 					</div>
                     <div class="form-row">
-						<input type="text" formControlName="telefone" name="telefone" class="telefone" id="telefone" placeholder="Telefone" required>
+						<input type="text" formControlName="telefone" name="telefone" class="telefone" id="telefone" maxlength ="15" (keyup)='atribuir_mascara_telefone()' placeholder="Telefone" required>
 					</div>
                 
 					
