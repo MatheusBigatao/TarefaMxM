@@ -401,3 +401,10 @@ body {
 	    margin: 44px 0 30px;
 	}
 }
+
+.formato_incorreto{
+    color: rgb(229, 91, 91);
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 5px;
+}

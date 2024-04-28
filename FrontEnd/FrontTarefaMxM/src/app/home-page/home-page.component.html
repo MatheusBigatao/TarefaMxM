@@ -4,28 +4,21 @@
 			<form [formGroup]="cadastroForm" class="form-detail" (ngSubmit)= "submitForm()" method="post" id="myform">
 				<div class="form-left">
 					<h2>Dados do Indivíduo</h2>
-					<!-- <div class="form-row">
-						<select name="title">
-						    <option class="option" value="title">Title</option>
-						    <option class="option" value="businessman">Businessman</option>
-						    <option class="option" value="reporter">Reporter</option>
-						    <option class="option" value="secretary">Secretary</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="zmdi zmdi-chevron-down"></i>
-						</span>
-					</div> -->
 					<div class="form-group">
 						<div class="form-row form-row-1">
 							<input type="text" formControlName="primeiro_nome" name="primeiro_nome" id="primeiro_nome" class="input-text" placeholder="Primeiro Nome" required>
+                            <span *ngIf="checarFormatacaoInput('primeiro_nome', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 						</div>
 						<div class="form-row form-row-2">
 							<input type="text" formControlName="sobrenome" name="sobrenome" id="sobrenome" class="input-text" placeholder="Sobrenome" required>
+                            <span *ngIf="checarFormatacaoInput('sobrenome', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 						</div>
 					</div>
                     <div class="form-group">
 						<div class="form-row form-row-3">
-							<input type="text" formControlName="cpf_cnpj_valor" autocomplete="off" maxlength="14" (keyup)='atribuir_mascara_cpf_cnpj()' name="cpf_cnpj_valor" class="cpf_cnpj_valor" id="cpf_cnpj_valor" placeholder="123.456.789-00" required>
+							<input type="text" formControlName="cpf_cnpj_valor" autocomplete="off" maxlength="14" (keypress)='atribuir_mascara_cpf_cnpj()' name="cpf_cnpj_valor" class="cpf_cnpj_valor" id="cpf_cnpj_valor" placeholder="123.456.789-00" required>
+                            <span *ngIf="checarFormatacaoInput('cpf_cnpj_valor')" class="formato_incorreto"> *Formato incorreto</span>
+                            <span *ngIf="checarFormatacaoInput('cpf_cnpj_valor', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 						</div>
 						<div class="form-row form-row-4">
 						<select name="cpf_cnpj" formControlName="cpf_cnpj" id="cpf_cnpj" (change)="limpar_cpf_cnpj()" required>
@@ -41,9 +34,13 @@
 					
 					<div class="form-row">
 						<input type="text" formControlName="email" name="email" class="email" id="email" placeholder="Email" required>
+                        <span *ngIf="checarFormatacaoInput('email')" class="formato_incorreto"> *Formato incorreto de email Ex: email&commat;example.com</span>
+                        <span *ngIf="checarFormatacaoInput('email', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
                     <div class="form-row">
 						<input type="text" formControlName="telefone" name="telefone" class="telefone" id="telefone" maxlength ="15" (keyup)='atribuir_mascara_telefone()' placeholder="Telefone" required>
+                        <span *ngIf="checarFormatacaoInput('telefone')" class="formato_incorreto"> *Formato incorreto de telefone Ex: (11) 99999-9999</span>
+                        <span *ngIf="checarFormatacaoInput('telefone', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
                 
 					
@@ -54,18 +51,9 @@
                     <div class="form-group">
 						<div class="form-row form-row-1">
 							<input type="text" formControlName="cep" name="cep" class="cep" id="cep" placeholder="CEP" required>
+                            <span *ngIf="checarFormatacaoInput('cep', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 						</div>
 						<div class="form-row form-row-1">
-                            <button class="buscar-cep" type="button" onclick="pesquisacep()">Buscar</button>
-							<!-- <select name="place">
-							    <option value="place">Place</option>
-							    <option value="Street">Street</option>
-							    <option value="District">District</option>
-							    <option value="City">City</option>
-							</select>
-							<span class="select-btn">
-							  	<i class="zmdi zmdi-chevron-down"></i>
-							</span> -->
 						</div>
 					</div>
                    
@@ -103,34 +91,28 @@
                           <span class="select-btn">
                             <i class="zmdi zmdi-chevron-down"></i>
                       </span> 
+                      <span *ngIf="checarEstado()" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
                     <div class="form-row">
                         <input type="text" formControlName="cidade" name="cidade" class="cidade" id="cidade" placeholder="Cidade" required>
+                        <span *ngIf="checarFormatacaoInput('cidade', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
 					<div class="form-row">
 						<input type="text" formControlName="rua" name="rua" class="rua" id="rua" placeholder="Rua" required>
+                        <span *ngIf="checarFormatacaoInput('rua', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
                     <div class="form-row form-row-2">
 						<input type="text" formControlName="numero" name="numero" class="numero" id="numero" placeholder="Número" required>
+                        <span *ngIf="checarFormatacaoInput('numero', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
                     <div class="form-row">
 						<input type="text" formControlName="bairro" name="bairro" class="bairro" id="bairro" placeholder="Bairro" required>
+                        <span *ngIf="checarFormatacaoInput('bairro', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
 					<div class="form-row">
 						<input type="text" formControlName="complemento" name="complemento" class="complemento" id="complemento" placeholder="Complemento" required>
 					</div>
 					
-					
-					
-					<!-- <div class="form-row">
-						<input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="Your Email">
-					</div> -->
-					<!-- <div class="form-checkbox">
-						<label class="container"><p>Eu aceito os <a href="#" class="text">Terms and Conditions</a> of your site.</p>
-						  	<input type="checkbox" name="checkbox">
-						  	<span class="checkmark"></span>
-						</label>
-					</div> -->
 					<div class="form-row-last">
 						<input type="submit" name="register" class="register" value="Registrar!">
 					</div>

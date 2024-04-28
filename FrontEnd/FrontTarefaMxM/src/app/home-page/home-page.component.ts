@@ -40,6 +40,20 @@ export class HomePageComponent {
 
     }
 
+    validacaoTodosCampos():boolean {
+        if (this.checarFormatacaoInput('primeiro_nome', true) || this.checarFormatacaoInput('sobrenome', true) ||
+            this.checarFormatacaoInput('cpf_cnpj_valor', true) || this.checarFormatacaoInput('cpf_cnpj_valor') ||
+            this.checarFormatacaoInput('email', true) || this.checarFormatacaoInput('email') ||
+            this.checarFormatacaoInput('cep', true) || this.checarFormatacaoInput('estado', true) ||
+            this.checarFormatacaoInput('cidade', true) || this.checarFormatacaoInput('rua', true) ||
+            this.checarFormatacaoInput('numero', true) || this.checarFormatacaoInput('bairro', true) ||
+            this.checarFormatacaoInput('telefone', true) || this.checarFormatacaoInput('telefone')
+            )
+        {
+            return true;
+        }
+        return false;
+    }
     submitForm() {
         alert('Login efetuado com sucesso!')
         // this._http.get<any>('http://localhost:3000/users').subscribe(res => {
@@ -145,4 +159,69 @@ export class HomePageComponent {
         }
         
     }
+
+    checarEstado() {
+        var element = document.getElementById('estado') as HTMLSelectElement;
+        var value = element.selectedOptions[0].value;
+        if (value == 'UF') {
+            return true;
+        }
+        return false;
+    }
+    checarFormatacaoInput(idInput: string, naoPodeVazio?: boolean) {
+        var element = document.getElementById(idInput) as HTMLInputElement;
+        
+        var value = element.value;
+
+        if (naoPodeVazio) {
+            if (!value) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        // Não aparece formatação inválida se o campo estiver vazio
+        if (!value) {
+            return false;
+        }
+
+        switch(idInput) {
+            case "cpf_cnpj_valor":
+                if (!value) {
+                    return false;
+                }
+                var element_cpf_cnpj = document.getElementById('cpf_cnpj') as HTMLInputElement;
+                var tipo_selecionado = element_cpf_cnpj.value;
+                if (tipo_selecionado == 'cpf'){
+                    var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+                }else{ //CNPJ
+                    var regex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/;
+                }
+                return !regex.test(String(value).toLowerCase());
+            break;
+            case "email":
+                var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return !regex.test(String(value).toLowerCase());
+            break;
+
+            case "telefone":
+                var regex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+                return !regex.test(String(value).toLowerCase());
+
+            break;
+            case "estado":
+                if (value == "UF") {
+                    return true;
+                }else{
+                    return false;
+                }
+            break;
+            default:
+                return false;
+            break;
+        }
+    }
+
 }
