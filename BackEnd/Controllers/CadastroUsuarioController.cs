@@ -18,7 +18,6 @@ namespace Mysql.Controllers
         [HttpPost(Name = "CadastroUsuario")]
         public async Task<bool> Post(Usuario novoUsuario)
         {
-            // Usuario usuario = new Usuario("Matheus", "qTqZv@example.com", "31999999999");
             Usuario usuario = novoUsuario;
             var criarUsuario = await DBContext.Usuarios.AddAsync(usuario);
             await DBContext.SaveChangesAsync();
