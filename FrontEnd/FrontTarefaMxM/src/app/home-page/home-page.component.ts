@@ -70,19 +70,19 @@ export class HomePageComponent {
     }
 
     limpar_cpf_cnpj(){
-        var element_selected = document.getElementById('cpf_cnpj') as HTMLInputElement;
-        var tipo_selecionado = element_selected.value;
-        var maxLength = 14;
-        var placeholder = '123.456.789-10';
+        var element_selected: HTMLInputElement = document.getElementById('cpf_cnpj') as HTMLInputElement;
+        var tipo_selecionado:string = element_selected.value;
+        var maxLength:number = 14;
+        var placeholder:string = '123.456.789-10';
         if (tipo_selecionado == 'cpf'){
-            let maxLength = 14
+            maxLength = 14
         }else{
-            var maxLength = 18
-            var placeholder = '00.623.904/0001-73';
+            maxLength = 18
+            placeholder = '00.623.904/0001-73';
     }
-        var element = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
+        var element: HTMLInputElement = document.getElementById('cpf_cnpj_valor') as HTMLInputElement;
         if (element) {
-            let value = element.value = '';
+            element.value = '';
 
             element.maxLength =maxLength;
             element.placeholder = placeholder;
@@ -117,6 +117,14 @@ export class HomePageComponent {
         }
     }
 
+    atribuir_mascara_cep() {
+        var element_valor = document.getElementById('cep') as HTMLInputElement;
+        var inputLength = element_valor.value.length;
+        
+        if(inputLength === 5){
+            element_valor.value += '-';
+        }
+    }
     atribuir_mascara_telefone() {
         var element_valor = document.getElementById('telefone') as HTMLInputElement;
         var inputLength = element_valor.value.length;
