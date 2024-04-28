@@ -91,7 +91,7 @@ export class HomePageComponent {
                 }
             }
         )
-        alert('Login efetuado com sucesso!')
+        alert('Cadastro efetuado com sucesso!')
     }
 
     limpar_cpf_cnpj(){

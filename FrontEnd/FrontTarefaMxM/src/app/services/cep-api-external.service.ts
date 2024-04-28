@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient ,HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CadastroPessoaDTO } from '../models/DTOs/cadastroPessoaDTO';
+import { urlGlobal } from './urlGlobal';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class CepApiExternalService {
      * @return {Observable<any>} Oobservable com a informação do endereço.
      */
     dadosLogradouroPeloCep(cep: string):Observable<any>{
-    return this.httpClient.get(`https://localhost:7096/correioapi?cep=${cep}`, {
+    return this.httpClient.get(`${urlGlobal}/correioapi?cep=${cep}`, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Accept': 'application/json',
