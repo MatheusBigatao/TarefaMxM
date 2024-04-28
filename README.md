@@ -10,13 +10,13 @@
  
 
 ## FrontEnd
-- [ ] Criar serviço para cadastro do usuário
-- [ ] Criar serviço para acessar API dos correios
+- [x] Criar serviço para cadastro do usuário
+- [x] Criar serviço para acessar API dos correios
 - [x] Criar página de cadastro de usuário
-  - [ ] Chamar API dos correios quando consultar CEP
-  - [ ] Atualizar inputs com as informações da API
-- [ ] Colocar validadores dos inputs
+  - [x] Chamar API dos correios quando consultar CEP
+  - [x] Atualizar inputs com as informações da API
+- [x] Colocar validadores dos inputs
   - [X] Máscara para CPF ou CNPJ (auto preencher com pontos e traços)
-  - [ ] Email
-  - [ ] Telefone
+  -[x] Email
+  - [x] Telefone
 - [ ] Página para acessar todos os dados dos usuários
