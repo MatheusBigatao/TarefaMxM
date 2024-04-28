@@ -44,7 +44,7 @@ Foi utilizado a API do ViaCep (https://viacep.com.br/) para obter os dados de en
 ## Vídeos de Apresentação
 
 #### Parte 1 (Link para youtube)
-[![Everything Is AWESOME](https://img.youtube.com/vi/t4qIRv7muxY/0.jpg)](https://www.youtube.com/watch?v=t4qIRv7muxY "Everything Is AWESOME")
+[![Everything Is AWESOME](https://img.youtube.com/vi/wb7tlcakLtk/0.jpg)](https://www.youtube.com/watch?v=wb7tlcakLtk "Everything Is AWESOME")
 
 #### Parte 2 Back-End (Link para youtube)
 [![Everything Is AWESOME](https://img.youtube.com/vi/qp02UBNo78g/0.jpg)](https://www.youtube.com/watch?v=qp02UBNo78g "Everything Is AWESOME")
