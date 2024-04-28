@@ -74,9 +74,15 @@ Acesse o site pelo caminho http://localhost:4200/
 
 ### Iniciando Back-end
 
+Insira os dados de seu banco MySQL no arquivo "BackEnd\appsettings.json".
+
 Em seu terminal, entre na pasta "BackEnd"
 ```bash
 cd TarefaMxM/BackEnd
+```
+Atualize o banco de dados com as tabelas necessárias para aplicação rodando a migration pelo terminal
+```bash
+dotnet ef database update
 ```
 Inicialize o servidor .NET com o comando abaixo
 ```bash
