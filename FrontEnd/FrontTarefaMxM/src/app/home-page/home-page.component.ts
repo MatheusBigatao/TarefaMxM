@@ -5,6 +5,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import {CadastroUsuarioService} from '../services/cadastro-usuario.service';
 import { HttpClient } from '@angular/common/http';
+import { CepApiExternalService } from '../services/cep-api-external.service';
 
 @Component({
   selector: 'app-home-page',
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class HomePageComponent {
     cadastroForm: FormGroup;
 
-    constructor(private _http: HttpClient, private _route: Router, private usuarioServices:CadastroUsuarioService) {
+    constructor(private _http: HttpClient, private _route: Router, private usuarioServices:CadastroUsuarioService, private cepServico: CepApiExternalService) {
         this.cadastroForm = new FormGroup({
             primeiro_nome: new FormControl('', Validators.required),
             sobrenome: new FormControl('', Validators.required),
@@ -232,4 +233,30 @@ export class HomePageComponent {
         }
     }
 
+    pesquisaCep() {
+        var element_cep = document.getElementById('cep') as HTMLInputElement;
+        var cep = element_cep.value;
+        if (!cep) {
+            return;
+        }
+        cep = cep.replace(/-/g, ''); // Removendo o "-"
+
+        this.cepServico.dadosLogradouroPeloCep(cep).subscribe(
+            {
+                next: (res) => {
+                    this.atualizaEnderecoPeloCep(res);
+                }
+            }
+        )
+
+    }
+    atualizaEnderecoPeloCep(res: any) {
+        this.cadastroForm.patchValue({
+            cep: res.cep,
+            estado: res.uf,
+            cidade: res.cidade,
+            rua: res.logradouro,
+            bairro: res.bairro
+        })
+    }
 }
