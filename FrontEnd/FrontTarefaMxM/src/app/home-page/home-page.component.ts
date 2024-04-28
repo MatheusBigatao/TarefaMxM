@@ -3,8 +3,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
-import {CadastroUsuarioService} from '../services/cadastro-usuario.service';
+import { CadastroUsuarioService } from '../services/cadastro-usuario.service';
 import { HttpClient } from '@angular/common/http';
+import { CadastroPessoaDTO } from '../models/DTOs/cadastroPessoaDTO';
 import { CepApiExternalService } from '../services/cep-api-external.service';
 
 @Component({
@@ -56,18 +57,41 @@ export class HomePageComponent {
         return false;
     }
     submitForm() {
+        this.cadastroForm.markAllAsTouched();
+        if (this.validacaoTodosCampos()) {
+            alert('Todos os campos devem ser preenchidos corretamente!');
+            return;
+        }
+
+        var pessoaCadastrada = new CadastroPessoaDTO();
+
+        pessoaCadastrada.nome = this.cadastroForm.value.primeiro_nome + ' ' + this.cadastroForm.value.sobrenome;
+
+        var documentoSelecionado = this.cadastroForm.value.cpf_cnpj;
+        if (documentoSelecionado == 'cpf'){
+            pessoaCadastrada.cpf = this.cadastroForm.value.cpf_cnpj_valor;
+            pessoaCadastrada.cnpj = "";
+        }else{ // cnpj
+            pessoaCadastrada.cpf = "";
+            pessoaCadastrada.cnpj = this.cadastroForm.value.cpf_cnpj_valor;
+        }
+        pessoaCadastrada.telefone = this.cadastroForm.value.telefone;
+        pessoaCadastrada.email = this.cadastroForm.value.email;
+        pessoaCadastrada.endereco.cep = this.cadastroForm.value.cep.replace(/-/g, '');
+        pessoaCadastrada.endereco.uf = this.cadastroForm.value.estado;
+        pessoaCadastrada.endereco.cidade = this.cadastroForm.value.cidade;
+        pessoaCadastrada.endereco.logradouro = this.cadastroForm.value.rua + ', ' + this.cadastroForm.value.numero;
+        pessoaCadastrada.endereco.bairro = this.cadastroForm.value.bairro;
+        pessoaCadastrada.endereco.complemento = this.cadastroForm.value.complemento;
+
+        this.usuarioServices.cadastrarPessoa(pessoaCadastrada).subscribe(
+            {
+                next: (res) => {
+                    // console.log(res);
+                }
+            }
+        )
         alert('Login efetuado com sucesso!')
-        // this._http.get<any>('http://localhost:3000/users').subscribe(res => {
-        //     const user = res.find((u: any) => { return u.cpf === this.cadastroForm.value.cpf && u.senha === this.cadastroForm.value.senha })
-        //     if (user) {
-        //         alert('Login efetuado com sucesso!')
-        //         localStorage.setItem('user', JSON.stringify(user))
-        //         this.cadastroForm.reset()
-        //         this._route.navigate(['/home'])
-        //     } else {
-        //         alert('Usuario ou senha incorretos!')
-        //     }
-        // })
     }
 
     limpar_cpf_cnpj(){

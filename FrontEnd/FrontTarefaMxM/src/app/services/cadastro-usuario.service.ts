@@ -1,9 +1,28 @@
 import { Injectable } from '@angular/core';
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { CadastroPessoaDTO } from '../models/DTOs/cadastroPessoaDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroUsuarioService {
 
-  constructor() { }
+    constructor(private httpClient:HttpClient) { }
+
+    cadastrarPessoa(cadastroPessoaDTO: CadastroPessoaDTO):Observable<any>{
+        return this.httpClient.post(`https://localhost:7096/cadastrousuario`,cadastroPessoaDTO, {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Accept': 'text/plain',
+              'Allow-Origin': '*',
+              'Access-Control-Allow-Origin': '*'
+            })
+            })
+            .pipe(
+                res => res,
+                error => error
+                )
+    
+        }
 }

@@ -42,23 +42,27 @@
                         <span *ngIf="checarFormatacaoInput('telefone')" class="formato_incorreto"> *Formato incorreto de telefone Ex: (11) 99999-9999</span>
                         <span *ngIf="checarFormatacaoInput('telefone', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 					</div>
-                
-					
                     
 				</div>
 				<div class="form-right">
 					<h2>Dados Endereço</h2>
                     <div class="form-group">
 						<div class="form-row form-row-1">
-							<input type="text" formControlName="cep" name="cep" class="cep" id="cep" placeholder="CEP" required>
+							<input type="text" 
+                            formControlName="cep"
+                            maxlength="9"
+                            (keypress)='atribuir_mascara_cep()'
+                            name="cep" class="cep" id="cep" placeholder="CEP" required>
+
                             <span *ngIf="checarFormatacaoInput('cep', true)" class="formato_incorreto"> *Campo Obrigatório</span>
 						</div>
 						<div class="form-row form-row-1">
+                            <button class="buscar-cep" type="button" (click)="pesquisaCep()">Buscar CEP</button>
 						</div>
 					</div>
                    
                     <div class="form-row">
-                        <select name="estado" formControlName="estado" required>
+                        <select id="estado" name="estado" formControlName="estado" required>
                             <option value="UF" selected>Estado</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
